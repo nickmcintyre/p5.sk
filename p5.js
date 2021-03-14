@@ -323,6 +323,10 @@
     mod.pInst.ellipse(x.v, y.v, r1.v, r2.v);
   });
 
+  mod.circle = new Sk.builtin.func(function (x, y, d) {
+    mod.pInst.circle(x.v, y.v, d.v);
+  });
+
   mod.text = new Sk.builtin.func(function (theText, x, y) {
     mod.pInst.text(theText.v, x.v, y.v);
   });
@@ -1196,7 +1200,7 @@
   });
 
   // Color
-  mod.background = new Sk.builtin.func(function (r, g, b) {
+  mod.background = new Sk.builtin.func(function () {
     const args_ = [];
     for (a of arguments) {
       if (typeof(a) !== 'undefined') {
@@ -1206,39 +1210,24 @@
     mod.pInst.background(...args_);
   });
 
-  mod.fill = new Sk.builtin.func(function (r, g, b, alpha) {
-    // r will be either:
-    //      a number in which case the fill will be grayscale
-    //      a color object
-    // g, and b may be undefined.  If they hold values it will
-    // be assumed that we have an r,g,b color tuple
-    // alpha may also be undefined - if defined, it is the opacity of the fill
-    if (typeof(g) !== "undefined") {
-      g = g.v;
+  mod.fill = new Sk.builtin.func(function () {
+    const args_ = [];
+    for (a of arguments) {
+      if (typeof(a) !== 'undefined') {
+        args_.push(a.v);
+      }
     }
-    if (typeof(b) !== "undefined") {
-      b = b.v;
-    }
-    if (typeof(alpha) !== "undefined") {
-      alpha = alpha.v;
-    }
-
-    mod.pInst.fill(r.v, g, b, alpha);
+    mod.pInst.fill(...args_);
   });
 
-
-  mod.stroke = new Sk.builtin.func(function (r, g, b, alpha) {
-    if (typeof(g) !== "undefined") {
-      g = g.v;
+  mod.stroke = new Sk.builtin.func(function () {
+    const args_ = [];
+    for (a of arguments) {
+      if (typeof(a) !== 'undefined') {
+        args_.push(a.v);
+      }
     }
-    if (typeof(b) !== "undefined") {
-      b = b.v;
-    }
-    if (typeof(alpha) !== "undefined") {
-      alpha = alpha.v;
-    }
-
-    mod.pInst.stroke(r.v, g, b, alpha);
+    mod.pInst.stroke(...args_);
   });
 
   mod.noStroke = new Sk.builtin.func(function () {
